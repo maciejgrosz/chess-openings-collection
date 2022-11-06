@@ -22,12 +22,16 @@ def select_opening(openings):
     data = []
 
     for opening in _openings:
-        item = {"id": str(opening["_id"]), "opening": opening["opening"]}
+        item = {
+            "name": opening["name"],
+            "eco": opening["eco"],
+            "moves": opening["moves"],
+        }
         if openings == "all":
             data.append(item)
     return data
 
 
-def add_opening():
-    item = {"opening": "Ruy Lopez"}
+def add_opening(name, eco, moves):
+    item = {"name": name, "eco": eco, "moves": moves}
     db().openings.insert_one(item)

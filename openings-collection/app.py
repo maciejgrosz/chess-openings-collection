@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import os
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
@@ -8,22 +8,9 @@ load_dotenv()
 app = Flask(__name__)
 
 
-@app.route("/health", methods=["GET"])
-def health():
-    if request.method == "GET":
-        try:
-            dbutils.health_db()
-            output = "Database is ok"
-            status = 200
-        except Exception as e:
-            output = str(e)
-            status = 500
-        return output, status
-
-
 @app.route("/")
 def index():
-    return jsonify(status=True, message="Welcome to the Dockerized Flask MongoDB app!")
+    return render_template("index.html")
 
 
 @app.route("/openings")
@@ -34,6 +21,11 @@ def openings():
 
 @app.route("/add_opening", methods=["POST", "GET"])
 def create_opening():
-    # data = request.get_json(force=True)
-    dbutils.add_opening()
+    if request.method == "GET":
+        return render_template("index.html")
+    if request.method == "POST":
+        name = request.form.get("name")
+        eco = request.form.get("eco_code")
+        moves = request.form.get("moves")
+    dbutils.add_opening(name, eco, moves)
     return jsonify(status=True, message="Opening saved successfully!"), 201
