@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+    app:
+        build: ./openings-collection
+        container_name: app
+        ports:
+            - "8084:5000"
+        depends_on:
+            - "mongodb"
+        networks:
+            - "network"
+    mongodb:
+        image: mongo:4.0.8
+        container_name: mongodb
+        environment:
+          MONGODB_INITSCRIPTS_DIR: /docker-entrypoint-initdb.d
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: pass
+          MONGO_INITDB_DATABASE: openings
+          MONGODB_DATA_DIR: /data/db
+        ports:
+          - "27017:27017"
+        volumes:
+          - "./mongodb/scripts:/docker-entrypoint-initdb.d"
+          - "mongodb-vol:/data/db"
+        networks:
+            - "network"
+        healthcheck:
+          test: "echo 'db.runCommand(\"ping\").ok'"
+          interval: 5s
+          timeout: 5s
+          retries: 3
+        restart: always
+networks:
+    network:
+        name: network
+volumes:
+  mongodb-vol:
