@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 import os
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
@@ -22,10 +22,10 @@ def openings():
 @app.route("/add_opening", methods=["POST", "GET"])
 def create_opening():
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("add_opening.html")
     if request.method == "POST":
         name = request.form.get("name")
         eco = request.form.get("eco_code")
         moves = request.form.get("moves")
     dbutils.add_opening(name, eco, moves)
-    return jsonify(status=True, message="Opening saved successfully!"), 201
+    return redirect(url_for("openings"))

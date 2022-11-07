@@ -1,136 +1,35 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {margin: 0;}
 
-ul.topnav {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-ul.topnav li {float: left;}
-
-ul.topnav li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-ul.topnav li a:hover:not(.active) {background-color: #111;}
-
-ul.topnav li a.active {background-color: #04AA6D;}
-
-ul.topnav li.right {float: right;}
-
-
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
-
-.input-container {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.icon {
-  padding: 10px;
-  background: #04AA6D;
-  color: white;
-  min-width: 50px;
-  text-align: center;
-}
-
-.input-field {
-  width: 100%;
-  padding: 10px;
-  outline: none;
-}
-
-.input-field:focus {
-  border: 2px solid dodgerblue;
-}
-
-/* Set a style for the submit button */
-.btn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 15px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-.btn:hover {
-  opacity: 1;
-}
-
-body {
-  background: #fff;
-}
-
-.title {
-  font-size: 2.5rem;
-  font-family: 'Lobster', cursive;
-}
-
-.wrapper {
-  background: url("https://img.freepik.com/free-photo/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall_1258-28312.jpg?w=1380&t=st=1667777185~exp=1667777785~hmac=4380dae2330e43f0a953299a429ca68489d325b5854668a99e8689ee4feed6aa"), #111111;
-  color: #eee;
-  height: 100vh;
-  min-width: 360px;
-  width: 100%;
-
-  
-}
-
-@keyframes scroll {
-   100%{
-    background-position:0px -3000px;
-  }
-}
-
-
-
-</style>
+<!-- Required CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.css">
 
 </head>
-<article class = "wrapper">
-{% block content %}
 
 <body>
 
-<ul class="topnav">
-  <li><a class="active" href="/">Home</a></li>
-  <li><a href="/openings">Openings</a></li>
-  <li><a href="/add_opening">Add new opening</a></li>
-</ul>
-
-<form id="inform" action="/add_opening" style="max-width:500px;margin:auto" method="post">
-    <h2>Add opening</h2>
-    <div class="input-container">
-      <input class="input-field" name="name"  type="text" placeholder="Name">
-    </div>
-  
-    <div class="input-container">
-      <input class="input-field" name="eco_code" type="text" placeholder="Eco code">
-    </div>
-    
-    <div class="input-container">
-      <input class="input-field" name="moves" type="text" placeholder="Initial moves">
-    </div>
-  
-    <button id="sendBtn" type="submit" value="submit" class="btn">Submit</button>
-  </form>
+<table class ="table table-hover" id ="table" data-toggle="table" data-url="localhost:8084/openings">
+    <thead>
+        <tr>
+            <th data-field="name">Name of opening</th>
+            <th data-field="eco">Eco code</th>
+            <th data-field="moves">Initial moves (1.e4 e5 2.Sf3 Sc6 ...) </th>
+        </tr>
+    </thead>
+</table>
 </body>
-{% endblock %}
-</article>
+
+<!-- Required js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.js"></script>
+<script>
+    $.getJSON('http://localhost:8084/openings', function(data) {
+    $(table).bootstrapTable({op_data: data});
+});
+</script>
+
 </html>
