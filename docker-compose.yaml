@@ -5,7 +5,7 @@ services:
         build: ./openings-collection
         container_name: app
         ports:
-            - "8084:5000"
+            - "4200:5000"
         depends_on:
             - "mongodb"
         networks:
@@ -19,8 +19,6 @@ services:
           MONGO_INITDB_ROOT_PASSWORD: pass
           MONGO_INITDB_DATABASE: openings
           MONGODB_DATA_DIR: /data/db
-        ports:
-          - "27017:27017"
         volumes:
           - "./mongodb/scripts:/docker-entrypoint-initdb.d"
           - "mongodb-vol:/data/db"
