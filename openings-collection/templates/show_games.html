@@ -32,7 +32,6 @@ table {
     <li><a class="active" href="/">Home</a></li>
     <li><a href="/add_opening">Add new opening</a></li>
     <li><a href="/show_games">Show all games</a></li>
-
     <li>
       <form class="form-check form-check-inline" action="/" method="post" style="padding-top: 2%;">
         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
@@ -44,22 +43,25 @@ table {
   <table class ="table table-hover table-dark" id ="table" data-toggle="table">
     <thead>
         <tr>
-            <th data-field="name">Name of opening</th>
-            <th data-field="eco_code">Eco code</th>
-            <th data-field="moves">Initial moves (1.e4 e5 2.Sf3 Sc6 ...) </th>
-            <th data-field="options"> Options</th>
+            <th data-field="white">White</th>
+            <th data-field="black">Black</th>
+            <th data-field="opening">Opening</th>
+            <th data-field="moves">Moves</th>
+            <th data-field="result">Result</th>
+            <th data-field="options">Options</th>
         </tr>
     </thead>
     <tbody>
-        {% for opening in openings %}
+        {% for game in games %}
           <tr>
-            <td>{{ opening.name }}</td>
-            <td>{{ opening.eco_code }}</td>
-            <td>{{ opening.moves }}</td>
+            <td>{{ game.white }}</td>
+            <td>{{ game.black }}</td>
+            <td>{{ game.opening }}</td>
+            <td>{{ game.moves }}</td>
+            <td>{{ game.result }}</td>
             <td>
-              <a href="opening/{{ opening.name }}" class="btn btn-outline-primary btn-sm" role="button"> Add game </a>
-              <a href="edit/{{ opening.name }}" class="btn btn-outline-primary btn-sm"role="button"> Edit opening </a>
-              <a href="delete/{{ opening.name }}" class="btn btn-outline-danger" role="button"> Delete opening </a>
+                <a href="edit/game/{{ game._id }}" class="btn btn-outline-primary btn-sm"role="button"> Edit game </a>
+                <a href="delete/game/{{ game._id }}" class="btn btn-outline-danger" role="button"> Delete game </a>
             </td>
           </tr>
         {% endfor %}

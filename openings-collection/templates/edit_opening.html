@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+
+{% extends "add_opening.html" %}
+{% block content %}
+
+<body>
+
+    <ul class="topnav">
+      <li><a class="active" href="/">Home</a></li>
+      <li><a href="/add_opening">Add new opening</a></li>
+      <li><a href="/show_games">Show all games</a></li>
+
+    </ul>
+    
+    <form id="inform" action="/edit/{{ op_name }}" style="max-width:500px;margin:auto" method="post">
+        <h2>Edit opening</h2>
+        <div class="input-container">
+          <input class="input-field" name="name"  type="text" value={{ op_name }}>
+        </div>
+      
+        <div class="input-container">
+          <input class="input-field" name="eco_code" type="text" value={{ eco_code }}>
+        </div>
+        
+        <div class="input-container">
+          <input class="input-field" name="moves" type="text" value={{ moves }}>
+        </div>
+      
+        <button id="sendBtn" type="submit" value="submit" class="btn">Edit</button>
+      </form>
+    </body>
+    
+{% endblock %}
