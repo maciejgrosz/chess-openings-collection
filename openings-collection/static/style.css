@@ -12,7 +12,7 @@
   margin-bottom: auto;
 }
 table {
-  background: url("https://img.freepik.com/free-vector/gradient-black-background-with-realistic-elements_23-2149158433.jpg?w=1380&t=st=1667857947~exp=1667858547~hmac=eca350e26e42294c8d2f0b6ef62d7a6b2b70dd162b3e909e24cf4225dfe31f22");
+    background: url("../static/gradient-black-background-with-realistic-elements_23-2149158433.webp"), #111111;
 }
 
 body {margin: 0;}
