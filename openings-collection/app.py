@@ -1,10 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for
-import os
-import sys
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
 import dbutils
-import logging
 
 load_dotenv()
 app = Flask(__name__)
@@ -78,13 +75,11 @@ def add_game(opening_name):
 def show_games():
     if request.method == "GET":
         data = dbutils.select_all_games()
-        print(data, file=sys.stderr)
         return render_template("show_games.html", games=data)
     if request.method == "POST":
         query = request.form.get("search")
         data = dbutils.searched_games(query)
-        print(data, file=sys.stderr)
-        return render_template("show_games.html", data=data)
+        return render_template("show_games.html", games=data)
 
 
 @app.route("/delete/game/<_id>")

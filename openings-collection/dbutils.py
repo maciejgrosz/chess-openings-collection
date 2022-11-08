@@ -1,9 +1,7 @@
-from flask import Flask, request, jsonify
 import os
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo, ObjectId
 from flask import current_app as app
-import sys
 
 
 load_dotenv()
@@ -73,9 +71,10 @@ def edit_game(_id, white, black, moves, result):
 
 
 def searched_games(query):
+    # Could be simplicitied
     output = []
     for key in ["white", "black", "opening"]:
         result = list(db().games.find({key: query}))
         if result:
-            output.append(result[0])
-    return output
+            output.append(result)
+    return [item for sublist in output for item in sublist]
