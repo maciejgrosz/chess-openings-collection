@@ -10,6 +10,7 @@ services:
             - "mongodb"
         networks:
             - "network"
+            - "database_network"
     mongodb:
         image: mongo:4.0.8
         container_name: mongodb
@@ -25,15 +26,27 @@ services:
           - "./mongodb/scripts:/docker-entrypoint-initdb.d"
           - "mongodb-vol:/data/db"
         networks:
-            - "network"
+            - "database_network"
         healthcheck:
           test: "echo 'db.runCommand(\"ping\").ok'"
           interval: 5s
           timeout: 5s
           retries: 3
         restart: always
+    nginx:
+        image: nginx
+        volumes:
+          - ./nginx:/etc/nginx
+        ports:
+          - "8082:80"
+        depends_on:
+          - app
+        networks:
+          - "network"
 networks:
     network:
         name: network
+    database_network:
+      name: database_network
 volumes:
   mongodb-vol:
