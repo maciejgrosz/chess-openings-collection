@@ -14,7 +14,6 @@ def db():
     mongo = PyMongo(app)
     return mongo.db
 
-
 def select_opening(key, value):
     return list(db().openings.find({key: value}))
 
@@ -71,10 +70,16 @@ def edit_game(_id, white, black, moves, result):
 
 
 def searched_games(query):
-    # Could be simplicitied
+    # Could be simplicitied (if white==black==opening -> 3 records will appear)
     output = []
     for key in ["white", "black", "opening"]:
         result = list(db().games.find({key: query}))
         if result:
             output.append(result)
     return [item for sublist in output for item in sublist]
+
+def searched_opening(query):
+    for key in ["name", "eco_code"]:
+        data = select_opening(key, query)
+        if data:
+            return data 

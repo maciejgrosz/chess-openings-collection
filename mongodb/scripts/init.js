@@ -1,15 +1,10 @@
-conn = new Mongo();
-db = conn.getDB("openings");
+db = db.getSiblingDB('admin');
 db.createUser(
-    {
-        user: "flaskdb",
-        pwd: "flaskdb",
-        roles: [
-            {
-                role: "readWrite",
-                db: "openings"
-            }
-        ]
-    }
-    );
-    
+ {
+   user: "flaskdb",
+   pwd: "flaskdb",
+   roles: [
+    { role: "readWrite", db: "openings" },
+   ]
+ }
+);

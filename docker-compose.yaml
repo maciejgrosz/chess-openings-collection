@@ -11,17 +11,15 @@ services:
         networks:
             - "database_network"
     mongodb:
-        image: mongo:4.0.8
+        image: mongo:6.0.2
         container_name: mongodb
         environment:
           MONGODB_INITSCRIPTS_DIR: /docker-entrypoint-initdb.d
           MONGO_INITDB_ROOT_USERNAME: admin
           MONGO_INITDB_ROOT_PASSWORD: pass
-          MONGO_INITDB_DATABASE: openings
-          MONGODB_DATA_DIR: /data/db
         volumes:
-          - "./mongodb/scripts:/docker-entrypoint-initdb.d"
-          - "mongodb-vol:/data/db"
+          - ./mongodb/scripts:/docker-entrypoint-initdb.d
+          - mongodb-vol:/data/db
         networks:
             - "database_network"
         healthcheck:
@@ -40,7 +38,7 @@ services:
     #     depends_on:
     #       - app
     #     networks:
-    #       - "network"
+    #       - "database_network"
 networks:
     database_network:
       name: database_network

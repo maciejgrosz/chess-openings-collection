@@ -14,10 +14,7 @@ def show_openings():
         return render_template("index.html", title="Openings", openings=data)
     if request.method == "POST":
         search_query = request.form.get("search")
-        for key in ["name", "eco_code"]:
-            data = dbutils.select_opening(key, search_query)
-            if data:
-                break
+        data = dbutils.searched_opening(search_query)
         return render_template("index.html", title="Openings", openings=data)
 
 
