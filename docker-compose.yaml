@@ -5,7 +5,7 @@ services:
         build: ./openings-collection
         container_name: app
         ports:
-            - "4200:5000"
+            - "5000:5000"
         depends_on:
             - "mongodb"
         networks:
@@ -28,17 +28,16 @@ services:
           timeout: 5s
           retries: 3
         restart: always
-    # nginx:
-    #     image: nginx
-    #     volumes:
-    #       - ./nginx:/etc/nginx
-    #       - ./openings-collection/static:/usr/share/nginx/html/static
-    #     ports:
-    #       - "8082:80"
-    #     depends_on:
-    #       - app
-    #     networks:
-    #       - "database_network"
+    nginx:
+        image: nginx
+        volumes:
+          - ./nginx:/etc/nginx
+        ports:
+          - "8082:80"
+        depends_on:
+          - app
+        networks:
+          - "database_network"
 networks:
     database_network:
       name: database_network
