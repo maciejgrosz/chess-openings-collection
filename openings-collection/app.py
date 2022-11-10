@@ -105,3 +105,8 @@ def edit_game(_id):
             moves=game["moves"],
             result=game["result"],
         )
+
+@app.route("/health", methods=["GET"])
+def health_check():
+    if request.method == "GET":
+        return jsonify(status=200)

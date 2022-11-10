@@ -11,7 +11,7 @@ pipeline{
                 }
             }
         }
-        stage('build') {
+        stage('deploy app on ecr') {
             steps {
                 sh 'aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-west-2.amazonaws.com'
                 sh 'docker build -t maciej_groszyk_portfolio openings-collection/'
@@ -19,11 +19,10 @@ pipeline{
                 sh 'docker push 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:latest'
             }
         }
-        stage('run app'){
-            steps{
-                sh 'docker-compose down'
-                sh 'docker-compose up -d --build'
-            }
+        stage('deploy nginx on ecr'){
+            sh "docker build -t maciej_groszyk_chess_nginx ./nginx"
+            sh "docker tag maciej_groszyk_chess_nginx:latest 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_chess_nginx:latest"
+            sh "docker push 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_chess_nginx:latest"
         }
     }
 }
