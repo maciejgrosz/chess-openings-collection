@@ -1,14 +1,14 @@
 module "compute" {
-  source                = "./modules/compute"
-  single_config         = var.single_config
-  subnets_list          = module.network.subnets_list
-  vpc_id                = module.network.vpc_id
-  security_group_id     = module.network.security_group_id
-  role_arn = var.role_arn
-  cluster_version = var.cluster_version
-  node_group_name = var.node_group_name
-  instance_types = var.instance_types
-  no_of_nodes = var.no_of_nodes
+  source            = "./modules/compute"
+  single_config     = var.single_config
+  subnets_list      = module.network.subnets_list
+  vpc_id            = module.network.vpc_id
+  security_group_id = module.network.security_group_id
+  role_arn          = var.role_arn
+  cluster_version   = var.cluster_version
+  node_group_name   = var.node_group_name
+  instance_types    = var.instance_types
+  no_of_nodes       = var.no_of_nodes
 }
 
 module "network" {

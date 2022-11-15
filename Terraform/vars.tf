@@ -56,5 +56,25 @@ variable "health_check_interval" {
 }
 
 variable "single_config" {
-    type = bool
+  type = bool
+}
+
+variable "role_arn" {
+  type = string
+}
+
+variable "cluster_version" {
+  type = string
+}
+
+variable "node_group_name" {
+  type = string
+}
+
+variable "instance_types" {
+  type = list(string)
+}
+
+variable "no_of_nodes" {
+  type = number
 }
