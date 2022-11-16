@@ -18,7 +18,7 @@ services:
         networks:
             - "database_network"
     mongodb:
-        image: mongo:6.0
+        image: mongo
         container_name: mongodb
         environment:
           MONGODB_INITSCRIPTS_DIR: /docker-entrypoint-initdb.d
