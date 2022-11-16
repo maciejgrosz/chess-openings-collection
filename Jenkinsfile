@@ -21,8 +21,8 @@ pipeline{
         stage('unit & static tests'){
             steps {
                 script{
-                    sh 'curl localhost:5000'
-                    sh 'curl localhost:8082'
+                    sh 'curl 35.176.222.34:5000'
+                    sh 'curl 35.176.222.34:8082'
                 }
             }
         }
