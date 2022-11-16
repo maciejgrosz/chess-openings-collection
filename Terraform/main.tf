@@ -9,6 +9,7 @@ module "compute" {
   node_group_name   = var.node_group_name
   instance_types    = var.instance_types
   no_of_nodes       = var.no_of_nodes
+  cluster_name      = var.cluster_name
 }
 
 module "network" {

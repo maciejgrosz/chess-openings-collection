@@ -6,6 +6,13 @@ services:
         container_name: app
         ports:
             - "5000:5000"
+        environment:
+          MONGODB_USERNAME: flaskdb
+          MONGODB_PASSWORD: flaskdb
+          MONGODB_HOSTNAME: mongodb
+          MONGODB_DATABASE: openings
+          FLASK_APP: FLASK_APP
+          FLASK_DEBUG: "TRUE"
         depends_on:
             - "mongodb"
         networks:
@@ -17,6 +24,7 @@ services:
           MONGODB_INITSCRIPTS_DIR: /docker-entrypoint-initdb.d
           MONGO_INITDB_ROOT_USERNAME: admin
           MONGO_INITDB_ROOT_PASSWORD: pass
+
         volumes:
           - ./mongodb/scripts:/docker-entrypoint-initdb.d
           - mongodb-vol:/data/db
@@ -29,15 +37,19 @@ services:
           retries: 3
         restart: always
     nginx:
-        image: nginx
-        volumes:
-          - ./nginx:/etc/nginx
+        build:
+          context: nginx/.
+          dockerfile: Dockerfile
         ports:
           - "8082:80"
+        environment:
+            BACKEND: app
         depends_on:
           - app
         networks:
           - "database_network"
+        command: [ "/bin/sh", "-c","export BACKEND && envsubst '$${BACKEND}' < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'" ]
+
 networks:
     database_network:
       name: database_network

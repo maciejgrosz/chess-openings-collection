@@ -31,3 +31,7 @@ variable "instance_types"{
 variable "no_of_nodes"{
   
 }
+
+variable "cluster_name"{
+
+}

@@ -78,3 +78,7 @@ variable "instance_types" {
 variable "no_of_nodes" {
   type = number
 }
+
+variable "cluster_name" {
+  type = string
+}

@@ -1,0 +1,11 @@
+server:
+  additionalApplications:
+  - name: app-of-apps
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/maciejgrosz/chess-openings-gitops.git
+      targetRevision: HEAD
+      path: .
+    destination:
+        server: https://kubernetes.default.svc

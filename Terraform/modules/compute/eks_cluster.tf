@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "eks_cluster" {
-  name     = "terraformEKScluster"
+  name     = var.cluster_name
   role_arn = var.role_arn
   version  = var.cluster_version
 
