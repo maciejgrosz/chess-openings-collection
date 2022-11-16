@@ -18,8 +18,9 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                
+
                 sh 'curl localhost:5000'
+                sh 'curl localhost:8082'
             }
         }
         stage('package'){
