@@ -35,3 +35,24 @@ variable "no_of_nodes"{
 variable "cluster_name"{
 
 }
+variable "dns_domain" {
+  
+}
+variable "policy" {
+  
+}
+variable "registry" {
+
+}
+variable "owner_id" {
+
+}
+variable "interval" {
+
+}
+variable "rbac_create" {
+  
+}
+variable "service_account_name" {
+  
+} 

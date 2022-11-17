@@ -11,4 +11,5 @@ resource "helm_release" "argocd" {
         name = "server.service.type"
         value = "LoadBalancer"
     }
+  # values file for argcd where is specified access to app-of-apps
 }
