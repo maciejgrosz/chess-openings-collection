@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from flask_pymongo import PyMongo
 import dbutils
 
-load_dotenv()
 app = Flask(__name__)
 
 

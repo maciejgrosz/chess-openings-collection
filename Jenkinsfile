@@ -7,7 +7,31 @@ pipeline{
                 deleteDir()
                 checkout scm
                 script{
-                    LOG = sh(returnStdout: true, script: 'git log --graph --oneline --decorate | head -1').trim()
+                    withCredentials([string(credentialsId: 'token', variable: 'TOKEN')]) { 
+                        sh "git fetch http://jenkins:$TOKEN@35.176.222.34/maciejgroszyk/analytics --tags"
+                    }
+                    env.GIT_COMMIT_MSG = sh (returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+                    echo "${GIT_COMMIT_MSG}"               }
+            }
+        }
+        stage('calculate tag'){
+            steps {
+                script {
+                    TAG=env.GIT_BRANCH.split('\\/') 
+                    echo "${TAG}"
+                    VERSION= TAG[1]
+                    TAG = sh(returnStdout: true, script: "git tag --sort version:refname \"${VERSION}.*\" | tail -1").trim()
+                    if ("${TAG}" == ""){
+                        NEW_TAG = "${VERSION}.0"
+                    } else {
+                        SUFFIX = sh(returnStdout: true, script: "echo '${TAG}' | cut -d '.' -f3 | cut -d ' ' -f1").trim()
+                        SUFFIX = "${SUFFIX}" as int
+                        ADDED =  SUFFIX + 1
+                        NEW_TAG = "${VERSION}.${ADDED}"
+                    }
+                    echo "${NEW_TAG}"
+                    sh "mvn versions:set -DnewVersion=${NEW_TAG}"
+                    sh "mvn versions:commit"
                 }
             }
         }
@@ -21,15 +45,8 @@ pipeline{
         stage('unit & static tests'){
             steps {
                 script{
-                    sh 'curl 35.176.222.34:5000'
-                    sh 'curl 35.176.222.34:8082'
-                }
-            }
-        }
-        stage('package'){
-            steps {
-                script{
-                    sh 'echo package'
+                    sh 'curl 35.176.222.34:5000/health'
+                    sh 'curl 35.176.222.34:8082/health'
                 }
             }
         }
