@@ -31,7 +31,9 @@ variable "instance_types"{
 variable "no_of_nodes"{
   
 }
+variable "dns_provider"{
 
+}
 variable "cluster_name"{
 
 }

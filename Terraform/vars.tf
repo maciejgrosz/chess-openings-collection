@@ -82,6 +82,11 @@ variable "no_of_nodes" {
 variable "cluster_name" {
   type = string
 }
+
+variable "dns_provider" {
+  type = string
+}
+
 variable "dns_domain" {
   type = string
 }

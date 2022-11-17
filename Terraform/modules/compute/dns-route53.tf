@@ -4,12 +4,12 @@ resource "helm_release" "external_dns" {
     chart = "external-dns"
     wait = true
     version = "6.12.0"
-    namespace = "argocd"
+    namespace = "default"
     create_namespace = "true"
 
     set {
         name="provider"
-        value=var.provider
+        value=var.dns_provider
     }
     set {
         name="domainFilters[0]"
