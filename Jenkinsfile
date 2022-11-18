@@ -9,8 +9,14 @@ pipeline{
                 script{
                     sh "git fetch https://github.com/maciejgrosz/chess-openings-collection.git --tags"
                     env.GIT_COMMIT_MSG = sh (returnStdout: true, script: 'git log -1 --pretty=%B').trim()
-                    echo "${GIT_COMMIT_MSG}"               
-                }
+                    def matcher = "${GIT_COMMIT_MSG}" =~ /^[0-9]+.[0-9]+/
+                    if (matcher) {
+                        env.TAGGING = true
+                        env.VERSION = matcher[0]
+                    } else {
+                        env.TAGGIN = false
+                        echo "No version provided"
+                    }                }
             }
         }
         // stage('build') {
@@ -36,24 +42,25 @@ pipeline{
         //     }
         // }
         stage('tag'){
+            when {
+                allOf{
+                    expression { env.TAGGING==true }
+                    branch "master"
+                }
+            }
             steps {
                 script {
-                    def matcher = "${GIT_COMMIT_MSG}" =~ / [0-9]+.[0-9]+/
-                    if (matcher) {
-                        echo matcher[0]
+
+                    TAG = sh(returnStdout: true, script: "git tag --sort version:refname \"${VERSION}.*\" | tail -1").trim()
+                    if ("${TAG}" == ""){
+                        NEW_TAG = "1.0.0"
                     } else {
-                        echo "nie dziala"
+                        SUFFIX = sh(returnStdout: true, script: "echo '${TAG}' | cut -d '.' -f3 | cut -d ' ' -f1").trim()
+                        SUFFIX = "${SUFFIX}" as int
+                        ADDED =  SUFFIX + 1
+                        NEW_TAG = "${VERSION}.${ADDED}"
                     }
-                    // TAG = sh(returnStdout: true, script: "git tag --sort version:refname \"${VERSION}.*\" | tail -1").trim()
-                    // if ("${TAG}" == ""){
-                    //     NEW_TAG = "1.0.0"
-                    // } else {
-                    //     SUFFIX = sh(returnStdout: true, script: "echo '${TAG}' | cut -d '.' -f3 | cut -d ' ' -f1").trim()
-                    //     SUFFIX = "${SUFFIX}" as int
-                    //     ADDED =  SUFFIX + 1
-                    //     NEW_TAG = "${VERSION}.${ADDED}"
-                    // }
-                    // echo "${NEW_TAG}"
+                    echo "${NEW_TAG}"
                 }
             }
         }
