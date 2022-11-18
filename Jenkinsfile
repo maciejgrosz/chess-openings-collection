@@ -38,9 +38,10 @@ pipeline{
         stage('tag'){
             steps {
                 script {
-                    if ("${GIT_COMMIT_MSG}".contains(' *.* ')) {
+                    if ("${GIT_COMMIT_MSG}" ==~ /[0-9]+.[0-9]+/) {
                         echo "${GIT_COMMIT_MSG}"
-                        
+                    } else {
+                        echo "nie dziala"
                     }
                     // TAG = sh(returnStdout: true, script: "git tag --sort version:refname \"${VERSION}.*\" | tail -1").trim()
                     // if ("${TAG}" == ""){
