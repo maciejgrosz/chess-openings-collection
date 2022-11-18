@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment{
+        NEW_TAG = ""
+    }
 
     stages {
         stage('checkout') {
@@ -54,12 +57,12 @@ pipeline{
 
                     TAG = sh(returnStdout: true, script: "git tag -l --sort version:refname \"${VERSION}.*\" | tail -1").trim()
                     if ("${TAG}" == ""){
-                        env.NEW_TAG = "${VERSION}.0"
+                        NEW_TAG = "${VERSION}.0"
                     } else {
                         SUFFIX = sh(returnStdout: true, script: "echo '${TAG}' | cut -d '.' -f3 | cut -d ' ' -f1").trim()
                         SUFFIX = "${SUFFIX}" as int
                         ADDED =  SUFFIX + 1
-                        env.NEW_TAG = "${VERSION}.${ADDED}"
+                        NEW_TAG = "${VERSION}.${ADDED}"
                     }
                     echo "${NEW_TAG}"
                     sh "git clean -f"
@@ -79,12 +82,12 @@ pipeline{
                     sh 'aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-west-2.amazonaws.com'
 
                     sh 'docker build -t maciej_groszyk_portfolio openings-collection/'
-                    sh 'docker tag maciej_groszyk_portfolio:latest 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:${env.NEW_TAG}'
-                    sh "docker push 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:${env.NEW_TAG}"                
+                    sh 'docker tag maciej_groszyk_portfolio:latest 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:${NEW_TAG}'
+                    sh "docker push 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:${NEW_TAG}"                
 
                     sh "docker build -t maciej_groszyk_chess_nginx ./nginx"
-                    sh "docker tag maciej_groszyk_chess_nginx:latest 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_chess_nginx:${env.NEW_TAG}"
-                    sh "docker push 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_chess_nginx:${env.NEW_TAG}"
+                    sh "docker tag maciej_groszyk_chess_nginx:latest 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_chess_nginx:${NEW_TAG}"
+                    sh "docker push 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_chess_nginx:${NEW_TAG}"
                 }
             }
         }
