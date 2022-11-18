@@ -13,7 +13,6 @@ pipeline{
                     if (matcher) {
                         env.TAGGING = "true"
                         env.VERSION = matcher[0]
-                        echo "ustawia"
                     } else {
                         env.TAGGIN = "false"
                         echo "No version provided"
@@ -45,7 +44,10 @@ pipeline{
         // }
         stage('tag'){
             when {
-                expression { env.TAGGING=="true" }                
+                allOf{
+                    expression { env.TAGGING=="true" }                
+                    branch "master"
+                }
             }
             steps {
                 script {
@@ -60,6 +62,9 @@ pipeline{
                         NEW_TAG = "${VERSION}.${ADDED}"
                     }
                     echo "${NEW_TAG}"
+                    sh "git clean -f"
+                    sh "git tag ${NEW_TAG}"
+                    sh "git push https://github.com/maciejgrosz/chess-openings-collection.git --tags"
                 }
             }
         }
