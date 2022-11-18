@@ -13,10 +13,12 @@ pipeline{
                     if (matcher) {
                         env.TAGGING = true
                         env.VERSION = matcher[0]
+                        echo "ustawia"
                     } else {
                         env.TAGGIN = false
                         echo "No version provided"
-                    }                }
+                    }                
+                }
             }
         }
         // stage('build') {
