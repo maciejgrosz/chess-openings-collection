@@ -26,6 +26,7 @@ pipeline{
         stage('build') {
             steps {
                 script{
+                    sh 'docker-compose down'
                     sh 'docker-compose up --build -d'
                 }
             }
@@ -100,7 +101,12 @@ pipeline{
             }
             steps{
                 script {
-                    sh "kubectl version"
+                    sh 'aws eks --region eu-west-1 update-kubeconfig --name MG-portfolio-cluster'
+                    sh 'git clone https://github.com/maciejgrosz/chess-openings-helmcharts'
+                    withCredentials([string(credentialsId: 'github-token', variable: 'TOKEN')]) {
+                        sh "bash patch_tag.sh ${NEW_TAG} ${TOKEN}"
+                    }
+
                 }
             }
         }
