@@ -106,7 +106,6 @@ pipeline{
                     withCredentials([string(credentialsId: 'github-token', variable: 'TOKEN')]) {
                         sh "bash patch_tag.sh ${NEW_TAG} ${TOKEN}"
                     }
-
                 }
             }
         }
