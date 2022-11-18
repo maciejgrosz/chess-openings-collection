@@ -52,7 +52,7 @@ pipeline{
             steps {
                 script {
 
-                    TAG = sh(returnStdout: true, script: "git tag --sort version:refname \"${VERSION}.*\" | tail -1").trim()
+                    TAG = sh(returnStdout: true, script: "git tag -l --sort version:refname \"${VERSION}.*\" | tail -1").trim()
                     if ("${TAG}" == ""){
                         NEW_TAG = "1.0.0"
                     } else {
