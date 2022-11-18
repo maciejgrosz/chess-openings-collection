@@ -11,11 +11,11 @@ pipeline{
                     env.GIT_COMMIT_MSG = sh (returnStdout: true, script: 'git log -1 --pretty=%B').trim()
                     def matcher = "${GIT_COMMIT_MSG}" =~ /^[0-9]+.[0-9]+/
                     if (matcher) {
-                        env.TAGGING = true
+                        env.TAGGING = "true"
                         env.VERSION = matcher[0]
                         echo "ustawia"
                     } else {
-                        env.TAGGIN = false
+                        env.TAGGIN = "false"
                         echo "No version provided"
                     }                
                 }
@@ -45,7 +45,7 @@ pipeline{
         // }
         stage('tag'){
             when {
-                expression { env.TAGGING==true }                
+                expression { env.TAGGING=="true" }                
             }
             steps {
                 script {
