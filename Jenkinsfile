@@ -38,9 +38,7 @@ pipeline{
         stage('tag'){
             steps {
                 script {
-                    def regex = / [0-9]+.[0-9]+/
-                    result = assert regex.matches("${GIT_COMMIT_MSG}")
-                    if (result) {
+                    if ("${GIT_COMMIT_MSG}" =~ / [0-9]+.[0-9]+/) {
                         echo "${GIT_COMMIT_MSG}"
                     } else {
                         echo "nie dziala"
