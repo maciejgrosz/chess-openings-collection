@@ -88,24 +88,24 @@ pipeline{
                 }
             }
         }
-        stage('Deploy'){
-            when {
-                branch "master"
-            }
-            steps{
+        // stage('Deploy'){
+        //     when {
+        //         branch "master"
+        //     }
+        //     steps{
                 
-            }
-        }
+        //     }
+        // }
 
-        stage('report'){
-            when {
-                branch "master"
-            }
-            steps{
-                script{
-                    sh 'echo report'
-                }
-            }
-        }
+        // stage('report'){
+        //     when {
+        //         branch "master"
+        //     }
+        //     steps{
+        //         script{
+        //             sh 'echo report'
+        //         }
+        //     }
+        // }
     }
 }
