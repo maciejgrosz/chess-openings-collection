@@ -45,10 +45,7 @@ pipeline{
         // }
         stage('tag'){
             when {
-                allOf{
-                    expression { env.TAGGING==true }
-                    branch "master"
-                }
+                expression { env.TAGGING==true }                
             }
             steps {
                 script {
