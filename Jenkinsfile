@@ -54,7 +54,7 @@ pipeline{
 
                     TAG = sh(returnStdout: true, script: "git tag -l --sort version:refname \"${VERSION}.*\" | tail -1").trim()
                     if ("${TAG}" == ""){
-                        NEW_TAG = "1.0.0"
+                        NEW_TAG = "${VERSION}.0"
                     } else {
                         SUFFIX = sh(returnStdout: true, script: "echo '${TAG}' | cut -d '.' -f3 | cut -d ' ' -f1").trim()
                         SUFFIX = "${SUFFIX}" as int
