@@ -38,8 +38,9 @@ pipeline{
         stage('tag'){
             steps {
                 script {
-                    if ("${GIT_COMMIT_MSG}" =~ / [0-9]+.[0-9]+/) {
-                        echo "${GIT_COMMIT_MSG}"
+                    def matcher = "${GIT_COMMIT_MSG}" =~ / [0-9]+.[0-9]+/
+                    if (matcher) {
+                        echo matcher[0]
                     } else {
                         echo "nie dziala"
                     }
