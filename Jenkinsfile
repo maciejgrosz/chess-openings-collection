@@ -82,7 +82,7 @@ pipeline{
                     sh 'aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-west-2.amazonaws.com'
 
                     sh 'docker build -t maciej_groszyk_portfolio openings-collection/'
-                    sh 'docker tag maciej_groszyk_portfolio:latest 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:${NEW_TAG}'
+                    sh "docker tag maciej_groszyk_portfolio:latest 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:${NEW_TAG}"
                     sh "docker push 644435390668.dkr.ecr.eu-west-2.amazonaws.com/maciej_groszyk_portfolio:${NEW_TAG}"                
 
                     sh "docker build -t maciej_groszyk_chess_nginx ./nginx"
