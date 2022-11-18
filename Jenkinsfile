@@ -64,7 +64,9 @@ pipeline{
                     echo "${NEW_TAG}"
                     sh "git clean -f"
                     sh "git tag ${NEW_TAG}"
-                    sh "git push https://github.com/maciejgrosz/chess-openings-collection.git --tags"
+                    withCredentials([string(credentialsId: 'github-token', variable: 'TOKEN')]) {
+                        sh "git push https://maciejgrosz:${TOKEN}@github.com/maciejgrosz/chess-openings-collection.git --tags"
+                    }
                 }
             }
         }
