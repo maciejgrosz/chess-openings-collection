@@ -1,5 +1,5 @@
 pushd chess-openings-helmcharts
-IM_TAG=$1
+export IM_TAG=$1
 yq -i '.image.tag = strenv(IM_TAG)' ./nginx/values.yaml
 yq -i '.image.tag = strenv(IM_TAG)' ./nginx/charts/chess/values.yaml
 git add -A
