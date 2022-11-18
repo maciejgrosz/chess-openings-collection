@@ -40,6 +40,7 @@ pipeline{
                 script {
                     if ("${GIT_COMMIT_MSG}".contains(' *.* ')) {
                         echo "${GIT_COMMIT_MSG}"
+                        
                     }
                     // TAG = sh(returnStdout: true, script: "git tag --sort version:refname \"${VERSION}.*\" | tail -1").trim()
                     // if ("${TAG}" == ""){
