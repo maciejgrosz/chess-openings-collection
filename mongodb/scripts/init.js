@@ -1,10 +1,10 @@
-db = db.getSiblingDB('admin');
-db.createUser(
- {
-   user: "flaskdb",
-   pwd: "flaskdb",
-   roles: [
-    { role: "readWrite", db: "openings" },
-   ]
- }
-);
+// db = db.getSiblingDB('admin');
+// db.createUser(
+//  {
+//    user: "flaskdb",
+//    pwd: "flaskdb",
+//    roles: [
+//     { role: "readWrite", db: "openings" },
+//    ]
+//  }
+// );
