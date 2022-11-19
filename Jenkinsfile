@@ -33,7 +33,7 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                sh 'python --version'
+                sh 'python3 --version'
             }
         }
         stage('e2e tests'){
