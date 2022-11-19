@@ -24,3 +24,8 @@ def runner(app):
 def test_health_check(client):
     response = client.get("/health")
     assert  b"200" in response.data
+
+# def test_health_check(client):
+#     response = client.get("/")
+#     breakpoint()
+#     assert  b"200" in response.data

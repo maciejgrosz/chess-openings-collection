@@ -31,12 +31,11 @@ pipeline{
                 }
             }
         }
-        // stage('unit & static tests'){
-        //     steps {
-
-        //         // sh 'bash openings-collection/tests.sh'
-        //     }
-        // }
+        stage('unit & static tests'){
+            steps {
+                sh 'docker exec -it app pytest tests/tests.py'
+            }
+        }
         stage('e2e tests'){
             steps {
                 script{
