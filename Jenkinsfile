@@ -107,15 +107,17 @@ pipeline{
                 }
             }
         }
-        stage('report'){
-            when { 
-                branch "master"
-            }
-            steps{
-                script{
-                    sh 'echo report'
-                }
-            }
-        }
+        post {  
+         failure {  
+            emailext recipientProviders: [culprits()],
+                        subject: 'Build failure', body: 'OMG, you broke the build!',
+                        attachLog: true, compressLog: true
+         } 
+         success {
+            emailext recipientProviders: [culprits()],
+                subject: 'Build success gratz!', body: 'OMG, you did it!',
+                attachLog: true, compressLog: true
+         } 
+     }  
     }
 } 
