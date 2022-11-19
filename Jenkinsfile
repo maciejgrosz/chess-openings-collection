@@ -33,9 +33,8 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                script{
-                    sh 'curl 35.176.222.34:5000/health'
-                    sh 'curl 35.176.222.34:8082/health'
+                withPythonEnv('python') {
+                    sh 'python --version'
                 }
             }
         }
