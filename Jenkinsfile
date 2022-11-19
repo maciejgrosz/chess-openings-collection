@@ -33,9 +33,9 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                sh 'python3 --version'
+                sh 'pytest tests/test.py'
+                sh 'black .'
             }
-        }
         stage('e2e tests'){
             steps {
                 script{
