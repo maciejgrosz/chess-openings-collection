@@ -33,6 +33,7 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
+                sh 'ls'
                 sh 'pytest tests/test.py'
                 sh 'black .'
             }
