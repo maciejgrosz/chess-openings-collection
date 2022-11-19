@@ -107,17 +107,17 @@ pipeline{
                 }
             }
         }
-        post {  
-            failure {  
-                emailext recipientProviders: [culprits()],
-                subject: 'Build failure', body: 'OMG, you broke the build!',
-                attachLog: true, compressLog: true
-            } 
-            success {
-                emailext recipientProviders: [culprits()],
-                subject: 'Build success gratz!', body: 'OMG, you did it!',
-                attachLog: true, compressLog: true
-            } 
-        }  
     }
+    post {  
+        failure {  
+            emailext recipientProviders: [culprits()],
+            subject: 'Build failure', body: 'OMG, you broke the build!',
+            attachLog: true, compressLog: true
+        } 
+        success {
+            emailext recipientProviders: [culprits()],
+            subject: 'Build success gratz!', body: 'OMG, you did it!',
+            attachLog: true, compressLog: true
+        } 
+    }  
 } 
