@@ -36,6 +36,7 @@ pipeline{
                 sh 'pytest tests/test.py'
                 sh 'black .'
             }
+        }
         stage('e2e tests'){
             steps {
                 script{
