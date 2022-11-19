@@ -33,10 +33,10 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                sh 'pushd openings-collection'
+                sh 'cd openings-collection'
                 sh 'pytest tests/tests.py'
                 sh 'black .'
-                sh 'popd'
+                sh 'cd ..'
             }
         }
         stage('e2e tests'){
