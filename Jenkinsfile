@@ -33,14 +33,12 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                sh 'docker exec app pytest tests/tests.py'
+                sh 'docker exec app pytest tests/unit_tests.py'
             }
         }
         stage('e2e tests'){
             steps {
-                script{
-                    sh 'echo e2e tests'
-                }
+                sh 'docker exec app pytest tests/e2e_tests.py'
             }
         }
         stage('tag'){
