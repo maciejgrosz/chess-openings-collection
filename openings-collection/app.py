@@ -66,7 +66,6 @@ def edit_opening(name):
         dbutils.edit_opening(name, new_name, eco_code, moves)
         return redirect(url_for("show_openings"))
 
-
 @bp.route("/add_game/<opening_name>", methods=["GET", "POST"])
 def add_game(opening_name):
     if request.method == "POST":
