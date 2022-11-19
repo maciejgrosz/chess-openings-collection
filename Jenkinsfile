@@ -68,7 +68,7 @@ pipeline{
                     }
                 }
             }
-        }
+        } 
         stage('Publish'){
             when {
                 allOf{
