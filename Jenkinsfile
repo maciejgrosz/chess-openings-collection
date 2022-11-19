@@ -33,9 +33,7 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                sh 'ls'
-                sh 'ls openings-collection/tests'
-                sh 'pytest openings-collection/tests/test.py'
+                sh 'pytest openings-collection/tests/tests.py'
                 sh 'black .'
             }
         }
