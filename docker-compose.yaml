@@ -7,8 +7,8 @@ services:
         ports:
             - "5000:5000"
         environment:
-          MONGODB_USERNAME: flaskdb 
-          MONGODB_PASSWORD: flaskdb
+          MONGODB_USERNAME: admin
+          MONGODB_PASSWORD: pass
           MONGODB_HOSTNAME: mongodb
           MONGODB_DATABASE: openings
           FLASK_APP: FLASK_APP
