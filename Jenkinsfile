@@ -34,6 +34,8 @@ pipeline{
         stage('unit & static tests'){
             steps {
                 sh 'cd openings-collection'
+                sh 'ls'
+                sh 'ls tests'
                 sh 'pytest tests/tests.py'
                 sh 'black .'
                 sh 'cd ..'
