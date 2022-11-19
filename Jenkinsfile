@@ -32,10 +32,9 @@ pipeline{
             }
         }
         stage('unit & static tests'){
+            agent { docker { image 'python:3.5.1' } }
             steps {
-                withPythonEnv('python') {
-                    sh 'python --version'
-                }
+                sh 'python --version'
             }
         }
         stage('e2e tests'){
