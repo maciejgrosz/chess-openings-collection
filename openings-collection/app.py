@@ -1,4 +1,13 @@
-from flask import Blueprint, Flask, request, jsonify, render_template, redirect, url_for, Response
+from flask import (
+    Blueprint,
+    Flask,
+    request,
+    jsonify,
+    render_template,
+    redirect,
+    url_for,
+    Response,
+)
 from dotenv import load_dotenv
 import prometheus_client
 from prometheus_client.core import CollectorRegistry
@@ -7,27 +16,34 @@ import time
 from flask_pymongo import PyMongo
 import dbutils
 
-bp = Blueprint('bp', __name__, url_prefix='/')
+bp = Blueprint("bp", __name__, url_prefix="/")
 
 _INF = float("inf")
 graphs = {}
-graphs['c'] = Counter('python_request_operations_total', 'The totoal number of processed requests')
-graphs['h'] = Histogram('python_request_duration_seconds', "Histogram for the druation in seconds.", buckets =(1,2,5,6,10,_INF))
+graphs["c"] = Counter(
+    "python_request_operations_total", "The totoal number of processed requests"
+)
+graphs["h"] = Histogram(
+    "python_request_duration_seconds",
+    "Histogram for the druation in seconds.",
+    buckets=(1, 2, 5, 6, 10, _INF),
+)
+
 
 @bp.route("/", methods=["POST", "GET"])
 def show_openings():
     start_time = time.time()
-    graphs['c'].inc()
+    graphs["c"].inc()
     if request.method == "GET":
         data = dbutils.select_all_opening()
         end_time = time.time()
-        graphs['h'].observe(end_time-start_time)
+        graphs["h"].observe(end_time - start_time)
         return render_template("index.html", title="Openings", openings=data)
     if request.method == "POST":
         search_query = request.form.get("search")
         data = dbutils.searched_opening(search_query)
         end_time = time.time()
-        graphs['h'].observe(end_time-start_time)
+        graphs["h"].observe(end_time - start_time)
         return render_template("index.html", title="Openings", openings=data)
 
 
@@ -65,6 +81,7 @@ def edit_opening(name):
         moves = request.form.get("moves")
         dbutils.edit_opening(name, new_name, eco_code, moves)
         return redirect(url_for("show_openings"))
+
 
 @bp.route("/add_game/<opening_name>", methods=["GET", "POST"])
 def add_game(opening_name):
@@ -124,6 +141,7 @@ def health_check():
     if request.method == "GET":
         return jsonify(status=200)
 
+
 @bp.route("/metrics", methods=["GET"])
 def metrics():
     res = []
@@ -131,10 +149,11 @@ def metrics():
         res.append(prometheus_client.generate_latest(v))
     return Response(res, mimetype="text/plain")
 
+
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(bp)
     return app
 
-app = create_app()
 
+app = create_app()
