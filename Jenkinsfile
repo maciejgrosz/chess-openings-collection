@@ -26,13 +26,13 @@ pipeline{
         stage('build') {
             steps {
                 script{
-                    // sh 'docker-compose down'
                     sh 'docker-compose up --build -d'
                 }
             }
         }
         stage('unit & static tests'){
             steps {
+                sh 'docker exec app pytest --black .'
                 sh 'docker exec app pytest tests/unit_tests.py'
             }
         }

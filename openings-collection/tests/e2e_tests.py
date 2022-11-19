@@ -50,7 +50,7 @@ def test_add_game(client):
 def test_edit_opening(client):
     dbutils.edit_opening("test_name", "new_test_name", "test_eco", "test_moves")
     response = client.get("/")
-    assert b"<td>new_FAKE_name</td>" in response.data
+    assert b"<td>new_test_name</td>" in response.data
 
 
 def test_delete_opening(client):

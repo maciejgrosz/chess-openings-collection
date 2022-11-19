@@ -1,8 +1,10 @@
 import os
 import sys
+
 sys.path.insert(1, os.getcwd())
 import pytest
 from app import create_app
+
 
 @pytest.fixture()
 def app():

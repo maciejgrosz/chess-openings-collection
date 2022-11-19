@@ -56,13 +56,13 @@ def create_opening():
         eco_code = request.form.get("eco_code")
         moves = request.form.get("moves")
     dbutils.add_opening(name, eco_code, moves)
-    return redirect(url_for("show_openings"))
+    return redirect(url_for("bp.show_openings"))
 
 
 @bp.route("/delete/<name>")
 def delete_opening(name):
     dbutils.delete_opening(name)
-    return redirect(url_for("show_openings"))
+    return redirect(url_for("bp.show_openings"))
 
 
 @bp.route("/edit/<name>", methods=["GET", "POST"])
@@ -80,7 +80,7 @@ def edit_opening(name):
         eco_code = request.form.get("eco_code")
         moves = request.form.get("moves")
         dbutils.edit_opening(name, new_name, eco_code, moves)
-        return redirect(url_for("show_openings"))
+        return redirect(url_for("bp.show_openings"))
 
 
 @bp.route("/add_game/<opening_name>", methods=["GET", "POST"])
@@ -91,7 +91,7 @@ def add_game(opening_name):
         moves = request.form.get("moves")
         result = request.form.get("result")
         dbutils.add_game(player_white, player_black, opening_name, moves, result)
-        return redirect(url_for("show_games"))
+        return redirect(url_for("bp.show_games"))
     if request.method == "GET":
         data = dbutils.select_opening("name", opening_name)[0]
         return render_template("add_game.html", title="Openings", opening=data["name"])
@@ -111,7 +111,7 @@ def show_games():
 @bp.route("/delete/game/<_id>")
 def delete_game(_id):
     dbutils.delete_game(_id)
-    return redirect(url_for("show_games"))
+    return redirect(url_for("bp.show_games"))
 
 
 @bp.route("/edit/game/<_id>", methods=["GET", "POST"])
@@ -122,7 +122,7 @@ def edit_game(_id):
         moves = request.form.get("moves")
         result = request.form.get("result")
         dbutils.edit_game(_id, white, black, moves, result)
-        return redirect(url_for("show_games"))
+        return redirect(url_for("bp.show_games"))
     if request.method == "GET":
         game = dbutils.select_game(_id)[0]
         return render_template(
