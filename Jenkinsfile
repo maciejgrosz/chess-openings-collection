@@ -33,7 +33,8 @@ pipeline{
         }
         stage('unit & static tests'){
             steps {
-                sh 'bash tests.sh'
+
+                sh 'bash openings-collection/tests.sh'
             }
         }
         stage('e2e tests'){
