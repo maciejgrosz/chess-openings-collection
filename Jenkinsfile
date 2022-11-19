@@ -103,7 +103,6 @@ pipeline{
             }
             steps{
                 script {
-                    sleep 10
                     sh 'aws eks --region eu-west-1 update-kubeconfig --name MG-portfolio-cluster'
                     sh 'git clone https://github.com/maciejgrosz/chess-openings-helmcharts'
                     withCredentials([string(credentialsId: 'github-token', variable: 'TOKEN')]) {
