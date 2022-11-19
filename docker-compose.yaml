@@ -27,7 +27,7 @@ services:
 
         volumes:
           - ./mongodb/scripts:/docker-entrypoint-initdb.d
-          # - mongodb-vol:/data/db
+          - mongodb-vol:/data/db
         networks:
             - "database_network"
         healthcheck:

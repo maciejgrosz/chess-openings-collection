@@ -1,12 +1,11 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for
+from flask import Blueprint, Flask, request, jsonify, render_template, redirect, url_for
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
 import dbutils
 
-app = Flask(__name__)
+bp = Blueprint('bp', __name__, url_prefix='/')
 
-
-@app.route("/", methods=["POST", "GET"])
+@bp.route("/", methods=["POST", "GET"])
 def show_openings():
     if request.method == "GET":
         data = dbutils.select_all_opening()
@@ -14,10 +13,11 @@ def show_openings():
     if request.method == "POST":
         search_query = request.form.get("search")
         data = dbutils.searched_opening(search_query)
+
         return render_template("index.html", title="Openings", openings=data)
 
 
-@app.route("/add_opening", methods=["POST", "GET"])
+@bp.route("/add_opening", methods=["POST", "GET"])
 def create_opening():
     if request.method == "GET":
         return render_template("add_opening.html")
@@ -29,13 +29,13 @@ def create_opening():
     return redirect(url_for("show_openings"))
 
 
-@app.route("/delete/<name>")
+@bp.route("/delete/<name>")
 def delete_opening(name):
     dbutils.delete_opening(name)
     return redirect(url_for("show_openings"))
 
 
-@app.route("/edit/<name>", methods=["GET", "POST"])
+@bp.route("/edit/<name>", methods=["GET", "POST"])
 def edit_opening(name):
     if request.method == "GET":
         data = dbutils.select_opening("name", name)[0]
@@ -53,7 +53,7 @@ def edit_opening(name):
         return redirect(url_for("show_openings"))
 
 
-@app.route("/add_game/<opening_name>", methods=["GET", "POST"])
+@bp.route("/add_game/<opening_name>", methods=["GET", "POST"])
 def add_game(opening_name):
     if request.method == "POST":
         player_white = request.form.get("player_white")
@@ -67,7 +67,7 @@ def add_game(opening_name):
         return render_template("add_game.html", title="Openings", opening=data["name"])
 
 
-@app.route("/show_games", methods=["POST", "GET"])
+@bp.route("/show_games", methods=["POST", "GET"])
 def show_games():
     if request.method == "GET":
         data = dbutils.select_all_games()
@@ -78,13 +78,13 @@ def show_games():
         return render_template("show_games.html", games=data)
 
 
-@app.route("/delete/game/<_id>")
+@bp.route("/delete/game/<_id>")
 def delete_game(_id):
     dbutils.delete_game(_id)
     return redirect(url_for("show_games"))
 
 
-@app.route("/edit/game/<_id>", methods=["GET", "POST"])
+@bp.route("/edit/game/<_id>", methods=["GET", "POST"])
 def edit_game(_id):
     if request.method == "POST":
         white = request.form.get("player_white")
@@ -106,7 +106,14 @@ def edit_game(_id):
         )
 
 
-@app.route("/health", methods=["GET"])
+@bp.route("/health", methods=["GET"])
 def health_check():
     if request.method == "GET":
         return jsonify(status=200)
+
+def create_app():
+    app = Flask(__name__)
+    app.register_blueprint(bp)
+    return app
+
+app = create_app()

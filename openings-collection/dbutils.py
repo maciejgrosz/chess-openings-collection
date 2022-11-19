@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from flask_pymongo import PyMongo, ObjectId
 from flask import current_app as app
 
-
+load_dotenv()
 def db():
     app.config[
         "MONGO_URI"
@@ -34,7 +34,7 @@ def delete_opening(op_name):
 def edit_opening(name, new_name, eco_code, moves):
     new_record = {"$set": {"name": new_name, "eco_code": eco_code, "moves": moves}}
     db().openings.find_one_and_update({"name": name}, new_record)
-    
+
 
 def add_game(white, black, opening, moves, result):
     game = {
