@@ -21,12 +21,10 @@ services:
         image: mongo
         container_name: mongodb
         environment:
-          # MONGODB_INITSCRIPTS_DIR: /docker-entrypoint-initdb.d
           MONGO_INITDB_ROOT_USERNAME: admin
           MONGO_INITDB_ROOT_PASSWORD: pass
 
         volumes:
-          # - ./mongodb/scripts:/docker-entrypoint-initdb.d
           - mongodb-vol:/data/db
         networks:
             - "database_network"
