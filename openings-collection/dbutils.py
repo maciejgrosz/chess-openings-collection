@@ -11,6 +11,7 @@ db = client.database
 openings = db.openings
 games = db.games
 
+
 def select_opening(key, value):
     return list(openings.find({key: value}))
 
