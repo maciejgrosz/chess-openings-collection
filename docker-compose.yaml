@@ -11,6 +11,7 @@ services:
           MONGODB_PASSWORD: pass
           MONGODB_HOSTNAME: mongodb
           MONGODB_DATABASE: openings
+          REPLICASET: ""
           FLASK_APP: FLASK_APP
           FLASK_DEBUG: "TRUE"
         depends_on:
