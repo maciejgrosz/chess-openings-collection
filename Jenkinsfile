@@ -41,6 +41,7 @@ pipeline{
         //         sh 'docker exec app pytest tests/e2e_tests.py'
         //     }
         // }
+        
         stage('tag'){
             when {
                 allOf{
