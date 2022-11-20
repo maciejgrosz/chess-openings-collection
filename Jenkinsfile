@@ -30,17 +30,17 @@ pipeline{
                 }
             }
         }
-        stage('unit & static tests'){
-            steps {
-                sh 'docker exec app pytest --black .'
-                sh 'docker exec app pytest tests/unit_tests.py'
-            }
-        }
-        stage('e2e tests'){
-            steps {
-                sh 'docker exec app pytest tests/e2e_tests.py'
-            }
-        }
+        // stage('unit & static tests'){
+        //     steps {
+        //         sh 'docker exec app pytest --black .'
+        //         sh 'docker exec app pytest tests/unit_tests.py'
+        //     }
+        // }
+        // stage('e2e tests'){
+        //     steps {
+        //         sh 'docker exec app pytest tests/e2e_tests.py'
+        //     }
+        // }
         stage('tag'){
             when {
                 allOf{
