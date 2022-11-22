@@ -20,7 +20,7 @@ def select_all_opening():
 
 def add_opening(name, eco, moves):
     _openings_names = openings.distinct("name")
-    item = {"name": name, "eco_code": eco, "moves": moves}
+    item = {"name": name.strip(), "eco_code": eco, "moves": moves}
     if item["name"] not in _openings_names and item["name"]:
         openings.insert_one(item)
 

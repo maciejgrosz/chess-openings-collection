@@ -93,6 +93,7 @@ def add_game(opening_name):
         dbutils.add_game(player_white, player_black, opening_name, moves, result)
         return redirect(url_for("bp.show_games"))
     if request.method == "GET":
+        print(opening_name)
         data = dbutils.select_opening("name", opening_name)[0]
         return render_template("add_game.html", title="Openings", opening=data["name"])
 

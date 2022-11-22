@@ -28,11 +28,6 @@ def client(app):
     return app.test_client()
 
 
-def test_health_check(client):
-    response = client.get("/health")
-    assert b"200" in response.data
-
-
 def test_add_opening(client):
     dbutils.add_opening("test_name", "test_eco", "test_moves")
     response = client.get("/")
