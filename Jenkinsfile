@@ -50,7 +50,7 @@ pipeline{
                 }
             }
             steps {
-                script {
+                script { 
 
                     TAG = sh(returnStdout: true, script: "git tag -l --sort version:refname \"${VERSION}.*\" | tail -1").trim()
                     if ("${TAG}" == ""){
