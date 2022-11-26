@@ -92,7 +92,11 @@ Eg. You can storage all your Ruy Lopez games under Ruy Lopez Collection and easi
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@maciejgrosz](https://github.com/maciejgrosz) - Idea & Initial work
+- [@maciejgrosz](https://github.com/maciejgrosz) 
+
+## APP architecture
+
+![Screenshot](Application_architecture.png)
 
 
 ## APP preview
