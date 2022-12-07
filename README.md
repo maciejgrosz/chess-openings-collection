@@ -28,6 +28,13 @@ Application written as final project for develeap bootcamp
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
+Other repositories linked to this project:
+
+```
+https://github.com/maciejgrosz/chess-openings-helmcharts - helm repository
+https://github.com/maciejgrosz/chess-openings-terraform - terraform repository
+https://github.com/maciejgrosz/chess-openings-gitops - gitops repository
+```
 ### Prerequisites
 
 What things you need to install the software and how to install them.
